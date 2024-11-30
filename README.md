@@ -1,6 +1,6 @@
 # Topographix  
 
-![Topographix Interface](https://i.ibb.co/YQsgKMf/Image1.png)  
+![Topographix Interface]([https://i.ibb.co/YQsgKMf/Image1.png](https://raw.githubusercontent.com/soheyb-roukas/Topographix/refs/heads/main/icons8_coordinate_system_150px.png))  
 *An alternative to traditional tools like AutoCAD + Covadis for topographic professionals.*
 
 **Topographix** is a modern, streamlined alternative to traditional tools like AutoCAD and Covadis, designed specifically for professionals in topography and public works. This Windows desktop application simplifies the process of matching topographic coordinates with their nearest axis profiles, calculating distances, and organizing results in an easy-to-read ordered list.
