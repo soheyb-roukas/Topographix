@@ -1,109 +1,155 @@
-﻿unit Unit1;
+unit Unit1;
 
 interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls, Vcl.ExtDlgs, Vcl.StdCtrls, System.StrUtils,
-  Vcl.Menus, Registry,
-  Vcl.Themes,
-  Vcl.Styles, Vcl.ExtCtrls, Shellapi;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls, Vcl.Menus, Vcl.StdCtrls,
+  Vcl.ToolWin, System.ImageList, Vcl.ImgList,  Vcl.Buttons,
+  Vcl.ExtCtrls, StrUtils,Vcl.ExtDlgs, Registry,Vcl.CheckLst,Vcl.Styles, Vcl.Themes, Shellapi;
 
 type
-  coords=(x,y,z);
   TForm1 = class(TForm)
+    PageControl1: TPageControl;
+    TabSheet1: TTabSheet;
+    TabSheet2: TTabSheet;
+    AxeListView: TListView;
+    TabSheet0: TTabSheet;
+    TabSheet4: TTabSheet;
+    ResultListview: TListView;
+    MainMenu1: TMainMenu;
+    File1: TMenuItem;
+    View1: TMenuItem;
+    Help1: TMenuItem;
+    PointsListView: TListView;
+    BitBtn3: TBitBtn;
+    BitBtn1: TBitBtn;
+    BitBtn0: TBitBtn;
+    BitBtn4: TBitBtn;
+    BitBtn5: TBitBtn;
     StatusBar1: TStatusBar;
-    ListView1: TListView;
+    OpenTextFileDialog1: TOpenTextFileDialog;
+    Memo1: TMemo;
+    ProgressBar1: TProgressBar;
     GroupBox1: TGroupBox;
     Edit1: TEdit;
-    Edit2: TEdit;
-    Button1: TButton;
-    Button2: TButton;
-    OpenTextFileDialog1: TOpenTextFileDialog;
-    Button3: TButton;
-    Memo1: TMemo;
-    Memo2: TMemo;
-    Label1: TLabel;
-    Label2: TLabel;
-    ProgressBar1: TProgressBar;
-    Button4: TButton;
-    MainMenu1: TMainMenu;
-    Files1: TMenuItem;
-    Edit3: TMenuItem;
-    About1: TMenuItem;
-    heme1: TMenuItem;
-    Light1: TMenuItem;
-    Dark1: TMenuItem;
+    RadioButton1: TRadioButton;
+    RadioButton2: TRadioButton;
+    RadioButton3: TRadioButton;
+    RadioButton4: TRadioButton;
+    RadioButton5: TRadioButton;
+    GroupBox2: TGroupBox;
+    CB1: TCheckBox;
+    CB6: TCheckBox;
+    CB2: TCheckBox;
+    CB7: TCheckBox;
+    CB3: TCheckBox;
+    CB8: TCheckBox;
+    CB9: TCheckBox;
+    CB5: TCheckBox;
+    SaveTextFileDialog1: TSaveTextFileDialog;
+    BitBtn2: TBitBtn;
+    ImageList1: TImageList;
+    GroupBox4: TGroupBox;
+    NormalizeCheck1: TCheckBox;
+    NormalizeCheck2: TCheckBox;
+    NormalizeCheck3: TCheckBox;
+    NormalizeCheck4: TCheckBox;
+    NormalizeCheck5: TCheckBox;
+    CheckBox1: TCheckBox;
+    CheckBox2: TCheckBox;
+    CheckBox3: TCheckBox;
+    CheckBox4: TCheckBox;
     SelectAxeFile1: TMenuItem;
-    SelectTopgraphicFile1: TMenuItem;
-    Export2: TMenuItem;
-    Button5: TButton;
-    App1: TMenuItem;
-    procedure Button1Click(Sender: TObject);
-    procedure Button2Click(Sender: TObject);
-    procedure Button3Click(Sender: TObject);
-    procedure Memo1Change(Sender: TObject);
-    procedure Memo2Change(Sender: TObject);
-    procedure Button4Click(Sender: TObject);
-    procedure ListView1Compare(Sender: TObject; Item1, Item2: TListItem;
+    SelectTopoPointsFile1: TMenuItem;
+    Polylinewindow1: TMenuItem;
+    Github1: TMenuItem;
+    GroupBox3: TGroupBox;
+    ComboBox1: TComboBox;
+    Timer1: TTimer;
+    CheckBox5: TCheckBox;
+    GroupBox5: TGroupBox;
+    RadioButton6: TRadioButton;
+    RadioButton7: TRadioButton;
+    procedure BitBtn3Click(Sender: TObject);
+    procedure BitBtn1Click(Sender: TObject);
+    procedure BitBtn0Click(Sender: TObject);
+    procedure ResultListviewCompare(Sender: TObject; Item1, Item2: TListItem;
       Data: Integer; var Compare: Integer);
-    procedure Light1Click(Sender: TObject);
-    procedure Dark1Click(Sender: TObject);
-    procedure Export2Click(Sender: TObject);
-    procedure Button5Click(Sender: TObject);
-    procedure SelectAxeFile1Click(Sender: TObject);
-    procedure SelectTopgraphicFile1Click(Sender: TObject);
-    procedure Edit1Change(Sender: TObject);
-    procedure Edit2Change(Sender: TObject);
-    procedure App1Click(Sender: TObject);
+    procedure BitBtn4Click(Sender: TObject);
+    procedure BitBtn5Click(Sender: TObject);
+    procedure BitBtn2Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
-
+    procedure Polylinewindow1Click(Sender: TObject);
+    procedure Github1Click(Sender: TObject);
+    procedure ComboBox1Change(Sender: TObject);
+    procedure Timer1Timer(Sender: TObject);
+    procedure CheckBox5Click(Sender: TObject);
+    procedure TabSheet4Exit(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure SelectAxeFile1Click(Sender: TObject);
+    procedure SelectTopoPointsFile1Click(Sender: TObject);
+    procedure BitBtn2ContextPopup(Sender: TObject; MousePos: TPoint;
+      var Handled: Boolean);
   private
     { Private declarations }
   public
-  procedure GetLastSettings;
-  procedure SaveLastSettings;
     { Public declarations }
   end;
 
 var
   Form1: TForm1;
-
+  LastAxePath:string;
 implementation
 
 {$R *.dfm}
 
 uses Unit2;
 
-function Getcoords(line:string;V:Coords):real;
-var
-r: real;
-begin
-r:=0;
- case V of
-    x: R:=strtofloat(SplitString(Line,' ')[1]);
-    y: R:=strtofloat(SplitString(Line,' ')[2]);
-    z: R:=strtofloat(SplitString(Line,' ')[3]);
- end;
-
- result:=R;
-end;
-
-procedure TForm1.SaveLastSettings;
+procedure SaveOptions;
 var
 Reg: TRegistry;
- LastEportSettings:string;
+ RegSettings, delimit, theme:string;
 begin
-  LastEportSettings:='00000000';
-  if form2.CheckBox1.Checked=true then LastEportSettings[1]:='1';
-  if form2.CheckBox2.Checked=true then LastEportSettings[2]:='1';
-  if form2.CheckBox3.Checked=true then LastEportSettings[3]:='1';
-  if form2.CheckBox4.Checked=true then LastEportSettings[4]:='1';
-  if form2.CheckBox5.Checked=true then LastEportSettings[5]:='1';
-  if form2.CheckBox6.Checked=true then LastEportSettings[6]:='1';
-  if form2.CheckBox7.Checked=true then LastEportSettings[7]:='1';
-  if form2.CheckBox8.Checked=true then LastEportSettings[8]:='1';
+  RegSettings:='000000000000000000000000';
 
+  if form1.NormalizeCheck1.Checked=true then RegSettings[1]:='1';
+  if form1.NormalizeCheck2.Checked=true then RegSettings[2]:='1';
+  if form1.NormalizeCheck3.Checked=true then RegSettings[3]:='1';
+  if form1.NormalizeCheck4.Checked=true then RegSettings[4]:='1';
+  if form1.NormalizeCheck5.Checked=true then RegSettings[5]:='1';
+
+
+  if form1.CB1.Checked=true then RegSettings[6]:='1';
+  if form1.CB2.Checked=true then RegSettings[7]:='1';
+  if form1.CB3.Checked=true then RegSettings[8]:='1';
+  if form1.CB5.Checked=true then RegSettings[9]:='1';
+  if form1.CB6.Checked=true then RegSettings[10]:='1';
+  if form1.CB7.Checked=true then RegSettings[11]:='1';
+  if form1.CB8.Checked=true then RegSettings[12]:='1';
+  if form1.CB9.Checked=true then RegSettings[13]:='1';
+
+
+
+  if form1.RadioButton1.Checked=true then RegSettings[14]:='1';
+  if form1.RadioButton2.Checked=true then RegSettings[15]:='1';
+  if form1.RadioButton3.Checked=true then RegSettings[16]:='1';
+  if form1.RadioButton4.Checked=true then RegSettings[17]:='1';
+  if form1.RadioButton5.Checked=true then RegSettings[18]:='1';
+
+
+  if form1.CheckBox1.Checked=true then RegSettings[19]:='1';
+  if form1.CheckBox2.Checked=true then RegSettings[20]:='1';
+  if form1.CheckBox3.Checked=true then RegSettings[21]:='1';
+  if form1.CheckBox4.Checked=true then RegSettings[22]:='1';
+  if form1.CheckBox5.Checked=true then RegSettings[23]:='1';
+
+  if form1.RadioButton7.Checked=true then RegSettings[24]:='1';
+
+ // form1.Caption:= RegSettings;
+  delimit:=form1.Edit1.Text;
+
+  theme:=inttostr(form1.ComboBox1.ItemIndex);
 
 
   Reg := TRegistry.Create;
@@ -116,13 +162,10 @@ begin
 
     begin
 
-    Reg.WriteString('LastAxePath', form1.Edit1.Text);
-    Reg.WriteString('LastPoitsPath', form1.Edit2.Text);
-
-    Reg.WriteString('LastEportSettings', LastEportSettings);
-
-    if form1.Dark1.Checked=true then Reg.WriteString('Lasttheme', 'Dark')
-     else  Reg.WriteString('Lasttheme', 'Light') ;
+    Reg.WriteString('SettingsV2', RegSettings);
+    Reg.WriteString('LastAxePath', LastAxePath);
+    Reg.WriteString('delimit', delimit);
+    Reg.WriteString('theme', theme);
 
     Reg.CloseKey;
 
@@ -134,16 +177,153 @@ begin
 
   end;
 
+
 end;
 
 
-procedure TForm1.GetLastSettings;
+
+
+
+procedure filldata();
+var
+i:integer;
+delimi, s:string;
+begin
+  with form1 do
+  begin
+    if radiobutton1.Checked then  delimi :=' ';
+    if radiobutton2.Checked then  delimi :=';';
+    if radiobutton3.Checked then  delimi :=',';
+    if radiobutton4.Checked then  delimi :=#9;
+    if radiobutton5.Checked then  delimi :=edit1.Text;
+     memo1.Clear;
+
+       for i :=0 to resultlistview.Items.Count-1 do
+       begin
+       s:='';
+        if CB1.Checked then s:=s+delimi+resultlistview.Items.Item[i].Caption;
+        if CB2.Checked then s:=s+delimi+resultlistview.Items.Item[i].SubItems.Strings[0];
+        if CB3.Checked then s:=s+delimi+resultlistview.Items.Item[i].SubItems.Strings[1];
+        if CB5.Checked then s:=s+delimi+resultlistview.Items.Item[i].SubItems.Strings[2];
+        if CB6.Checked then s:=s+delimi+resultlistview.Items.Item[i].SubItems.Strings[3];
+        if CB7.Checked then s:=s+delimi+resultlistview.Items.Item[i].SubItems.Strings[4];
+        if CB8.Checked then s:=s+delimi+resultlistview.Items.Item[i].SubItems.Strings[5];
+        if CB9.Checked then s:=s+delimi+resultlistview.Items.Item[i].SubItems.Strings[6];
+        s:= StringReplace(s, delimi, '', []);
+
+       memo1.Lines.Add(s);
+
+       end;
+       memo1.Text:=trim(memo1.Text);
+    end;
+end;
+
+   procedure ListLoad(theList:Tlistview; clear:boolean);
+   var
+  Words: TArray<string>;
+  i:integer;
+  s:string;
+   begin
+         form1.ResultListview.Items.Clear;
+         if clear  then  theList.Items.Clear;
+     for i := 0 to form1.Memo1.Lines.Count-1 do
+       begin
+        s:= form1.Memo1.Lines.Strings[i];
+        Words := SplitString(s, ' ');
+
+         with theList.Items.Add do
+         begin
+           if Length(Words)>=0 then  caption := trim(Words[0]) else SubItems.Add('0');
+           if Length(Words)>1 then  SubItems.Add(trim(Words[1])) else SubItems.Add('0');
+           if Length(Words)>2 then  SubItems.Add(trim(Words[2])) else SubItems.Add('0');
+           if Length(Words)>3 then  SubItems.Add(trim(Words[3])) else SubItems.Add('0');
+           if Length(Words)>4 then  SubItems.Add(trim(Words[4])) else SubItems.Add('0');
+           if Length(Words)>5 then  SubItems.Add(trim(Words[5])) else SubItems.Add('0');
+           end;
+         end;
+   end;
+
+
+
+procedure normalizeTXT;
+
+begin
+    with form1 do begin
+
+
+
+       // delete first and last space
+       if NormalizeCheck1.Checked then   Memo1.Text :=trim(Memo1.Text);
+
+       // replace tab by space
+          if NormalizeCheck1.Checked then
+          while pos(#9,Memo1.Text)>=1  do
+       Memo1.Text := StringReplace(Memo1.Text, #9, ' ', [rfReplaceAll]);
+
+       // replace multi space by one space
+          if NormalizeCheck1.Checked then
+       while pos('  ',Memo1.Text)>=1  do
+        Memo1.Text := StringReplace(Memo1.Text, '  ', ' ', [rfReplaceAll]);
+
+          // delete empty lines
+             if NormalizeCheck1.Checked then
+        while pos (#13#10#13#10,Memo1.Text)>1 do
+          Memo1.Text := StringReplace(Memo1.Text, #13#10#13#10, #13#10, [rfReplaceAll]);
+
+             if NormalizeCheck1.Checked then
+       // replace desimal char by system char
+        if FormatSettings.DecimalSeparator='.' then
+         Memo1.Text := StringReplace(Memo1.Text, ',', FormatSettings.DecimalSeparator, [rfReplaceAll]) else
+        if FormatSettings.DecimalSeparator=',' then
+         Memo1.Text := StringReplace(Memo1.Text, '.', FormatSettings.DecimalSeparator, [rfReplaceAll]);
+
+    end;
+end;
+
+
+
+  Function is_it_left (IA,IP:integer):boolean;
+     var
+  Xa1,Xa2,Xk, Ya1, Ya2,YK, Product :Real;
+  begin
+
+     if ia= form1.AxeListView.Items.Count-1 then ia:=ia-1;
+
+     XK:=strtofloat(form1.PointsListView.Items.Item[Ip].SubItems[0]) ;
+     YK:=strtofloat(form1.PointsListView.Items.Item[Ip].SubItems[1]) ;
+     Xa1:=strtofloat(form1.AxeListView.Items.Item[Ia].SubItems[0]) ;
+     Ya1:=strtofloat(form1.AxeListView.Items.Item[Ia].SubItems[1]) ;
+     Xa2:=strtofloat(form1.AxeListView.Items.Item[Ia+1].SubItems[0]) ;
+     Ya2:=strtofloat(form1.AxeListView.Items.Item[Ia+1].SubItems[1]) ;
+
+    Product:=(Xa2-Xa1)*(YK-Ya1)-(Ya2-Ya1)*(Xk-Xa1);
+
+    is_it_left := Product>0 ;
+      end;
+
+procedure louadAxe(path:string);
+  begin
+  with form1 do
+  begin
+
+    try
+    memo1.Lines.LoadFromFile(path);
+    finally
+    normalizeTXT;
+    ListLoad(axeListview,true);
+    end;
+    pagecontrol1.Pages[1].Caption:= 'Axe '+' ('+inttostr(axeListview.Items.Count)+')' ;
+    StatusBar1.Panels.Items[1].Text:=extractfilename(path);
+  end;
+
+ end;
+procedure LouadOptions;
 var
 Reg: TRegistry;
- LastEportSettings:string;
+RegSettings:string;
 begin
 
-
+  RegSettings:=' 111111001011111111111100';
   Reg := TRegistry.Create;
 
   try
@@ -153,349 +333,321 @@ begin
     if Reg.OpenKey('Software\Topographix', False) then
 
     begin
-
-    form1.Edit1.Text := Reg.ReadString('LastAxePath');
-    form1.Edit2.Text := Reg.ReadString('LastPoitsPath');
-    LastEportSettings := Reg.ReadString('LastEportSettings');
-
-
-
-
-     if Reg.ReadString('Lasttheme') = 'Dark' then
-      begin
-       TStyleManager.TrySetStyle('Glow');
-       form1.Dark1.Checked:=true;
-       form1.Light1.Checked:=false;
-      end;
-
+    RegSettings := Reg.ReadString('SettingsV2');
+    form1.Edit1.Text := Reg.ReadString('delimit');
+    form1.ComboBox1.ItemIndex := strtoint(Reg.ReadString('theme'));
+    TStyleManager.SetStyle(form1.combobox1.Items.Strings[form1.combobox1.ItemIndex]);
+    LastAxePath := Reg.ReadString('LastAxePath');
     Reg.CloseKey;
-
     end;
 
-  finally
 
-  Reg.Free;
-    if LastEportSettings[1]='1' then form2.CheckBox1.Checked:=true;
-    if LastEportSettings[2]='1' then form2.CheckBox2.Checked:=true;
-    if LastEportSettings[3]='1' then form2.CheckBox3.Checked:=true;
-    if LastEportSettings[4]='1' then form2.CheckBox4.Checked:=true;
-    if LastEportSettings[5]='1' then form2.CheckBox5.Checked:=true;
-    if LastEportSettings[6]='1' then form2.CheckBox6.Checked:=true;
-    if LastEportSettings[7]='1' then form2.CheckBox7.Checked:=true;
-    if LastEportSettings[8]='1' then form2.CheckBox8.Checked:=true;
+      form1.NormalizeCheck1.Checked:=RegSettings[1]='1';
+      form1.NormalizeCheck2.Checked:=RegSettings[2]='1';
+      form1.NormalizeCheck3.Checked:=RegSettings[3]='1';
+      form1.NormalizeCheck4.Checked:=RegSettings[4]='1';
+      form1.NormalizeCheck5.Checked:=RegSettings[5]='1';
+      form1.CB1.Checked:=RegSettings[6]='1';
+      form1.CB2.Checked:=RegSettings[7]='1';
+      form1.CB3.Checked:=RegSettings[8]='1';
+      form1.CB5.Checked:=RegSettings[9]='1';
+      form1.CB6.Checked:=RegSettings[10]='1';
+      form1.CB7.Checked:=RegSettings[11]='1';
+      form1.CB8.Checked:=RegSettings[12]='1';
+      form1.CB9.Checked:=RegSettings[13]='1';
+      form1.RadioButton5.Checked:=RegSettings[18]='1';
+      form1.RadioButton4.Checked:=RegSettings[17]='1';
+      form1.RadioButton3.Checked:=RegSettings[16]='1';
+      form1.RadioButton2.Checked:=RegSettings[15]='1';
+      form1.RadioButton1.Checked:=RegSettings[14]='1';
+      form1.CheckBox1.Checked:=RegSettings[19]='1';
+      form1.CheckBox2.Checked:=RegSettings[20]='1';
+      form1.CheckBox3.Checked:=RegSettings[21]='1';
+      form1.CheckBox4.Checked:=RegSettings[22]='1';
+      form1.CheckBox5.Checked:=RegSettings[23]='1';
+      form1.RadioButton7.Checked:=RegSettings[24]='1';
+      if  form1.CheckBox1.Checked then
+      louadAxe(LastAxePath);
 
-
+  except
   end;
 
 end;
 
-
-function GetPointName(line:string):string;
-begin
-GetPointName:=SplitString(Line,' ')[0];
-end;
-
-Function GetDistance(IA,IP:Integer):Real;
+  procedure TForm1.BitBtn0Click(Sender: TObject);
 var
-Xa,XP, Ya,YP, d :Real;
-
+A,P:integer;
+  Xa,Ya,Xp, Yp , NearDist, dist :real;
+  sd:string;
 begin
-  Xa:= getcoords(form1.Memo1.Lines.Strings[IA],X);
-  XP:= getcoords(form1.Memo2.Lines.Strings[Ip],X);
-  Ya:= getcoords(form1.Memo1.Lines.Strings[IA],Y);
-  YP:= getcoords(form1.Memo2.Lines.Strings[IP],Y);
-
-
-
-d:=Sqrt( Sqr(Xp-Xa) + Sqr(Yp-Ya) );
-
-Result:=d;
-
-end;
-
-Function NearPK(IP:integer):Integer;
-var
-i, CloseOne:integer;
-D, CloseD: real;
-
-begin
-
- CloseD:=-1;
- CloseOne:=0;
-
-    for i  := 0 to form1.Memo1.Lines.Count-2 do
+   if BitBtn0.ImageIndex=1 then
    begin
+     BitBtn0.ImageIndex:=0;
+     BitBtn0.Caption:='Sort';
+   end else
+if (axelistview.Items.Count>1 ) and( pointslistview.Items.Count>1)  then
+  begin
+  ResultListview.Clear;
+  pagecontrol1.ActivePageIndex:=0;
+  BitBtn0.ImageIndex:=1;
+  BitBtn0.Caption:='Stop';
+ //  ResultListview.SortType:=stNone;
 
-    D:= GetDistance(i,ip);
+  ProgressBar1.Max:=pointslistview.Items.Count-1;
+   for P := 0 to pointslistview.Items.Count-1 do
+   begin
+    if BitBtn0.ImageIndex=0 then break;
+    ProgressBar1.Position:=p;
+     application.ProcessMessages;
 
-      if ( D < CloseD) or  (CloseD =-1)  then
-      begin
-       CloseD:= D ;
-       CloseOne:=i;
-      end else  break
+     for A := 0 to axelistview.Items.Count-1 do
+       begin
+       Xa:=strtofloat( form1.AxeListView.Items.Item[A].SubItems[0]);
+       Ya:=strtofloat( form1.AxeListView.Items.Item[A].SubItems[1]);
+       Xp:=strtofloat( form1.Pointslistview.Items.Item[P].SubItems[0]);
+       Yp:=strtofloat( form1.Pointslistview.Items.Item[P].SubItems[1]);
+
+       dist:=Sqrt( Sqr(Xp-Xa) + Sqr(Yp-Ya) );
+
+         if (A=0) or(dist<=NearDist )then  NearDist:= dist
+          else
+          begin
+
+             with resultListView.Items.Add  do
+             begin
+
+               if is_it_left(a,p) then NearDist :=NearDist*-1;
+               caption:= axelistview.Items.Item[a-1].Caption;
+               SubItems.Add(axelistview.Items.Item[a-1].SubItems[0]);
+               SubItems.Add(axelistview.Items.Item[a-1].SubItems[1]);
+
+
+                   SD:= formatFloat('#00.000',NearDist);
+                   if sd[1] <>'-' then sd := ' '+sd;
+                   SubItems.Add(sd);
+
+               SubItems.Add( Pointslistview.Items.Item[p].Caption);
+               SubItems.Add(Pointslistview.Items.Item[p].SubItems[0]);
+               SubItems.Add(Pointslistview.Items.Item[p].SubItems[1]);
+               SubItems.Add(Pointslistview.Items.Item[p].SubItems[2]);
+               SubItems.Add(axelistview.Items.Item[a-1].SubItems[2]);
+               SubItems.Add(axelistview.Items.Item[a-1].SubItems[3]);
+                 break;
+             end;
+            end;
+       end;
+   end;
+
+        ResultListview.CustomSort(nil, 0);
+        BitBtn0.ImageIndex:=0;
+        BitBtn0.Caption:='Sort';
+        if CheckBox2.Checked then showmessage('Sorting is Done');
+  end;
+
+end;
+
+procedure TForm1.BitBtn1Click(Sender: TObject);
+var
+clear:boolean;
+i:integer;
+begin
+if OpenTextFileDialog1.Execute  then
+begin
+   clear:=RadioButton6.Checked ;
+  try
+  memo1.Lines.LoadFromFile(OpenTextFileDialog1.FileName);
+  finally
+   normalizeTXT;
+
+   if (not clear) and (pointsListview.Items.Count>0) then
+     begin
+      i := MessageDlg('Choose "Yes" to add new points to existing points or "NO" to replace them ', mtConfirmation, [mbYes, mbNo], 0);
+
+        case i of
+          mrYes:
+            clear:=false;
+          mrNo:
+             clear:=True;
+        end;
+     end;
+
+   ListLoad(pointsListview,clear);
+  end;
+
+     PageControl1.ActivePageIndex:=2;
+     StatusBar1.Panels.Items[3].Text:=extractfilename(OpenTextFileDialog1.FileName);
+     pagecontrol1.Pages[2].Caption:= 'Points '+' ('+inttostr(pointsListview.Items.Count)+')';
+end;
+end;
+procedure TForm1.BitBtn2Click(Sender: TObject);
+var
+i,n,m, NP:integer;
+s1,s2:string;
+exist:boolean;
+begin
+form2.ListView1.Clear;
+
+
+for i := 0 to resultlistview.Items.Count-1 do
+   begin
+         exist:= false;
+   for n := 0 to form2.ListView1.Items.Count-1 do
+        begin
+
+          if resultlistview.Items.Item[i].Caption = form2.ListView1.Items.Item[n].Caption then
+           begin
+            exist:=true;
+            break
+           end;
+           
+        end;
+         if exist=false then
+            begin
+            s1:=''; s2:='';   NP:=0;
+               for m := i to resultlistview.Items.Count-1 do
+               begin
+                 if resultlistview.Items.Item[m].Caption=resultlistview.Items.Item[i].Caption   then
+                 begin
+                 NP:=NP+1;
+                 s1:=s1+#13+trim(resultlistview.Items.Item[m].SubItems[2])+','+resultlistview.Items.Item[m].SubItems[6];
+                 s2:=s2+#13+floattostr(strtofloat(trim(resultlistview.Items.Item[m].SubItems[2]))+strtofloat(resultlistview.Items.Item[m].SubItems[7]))
+                 +','+floattostr(strtofloat(trim(resultlistview.Items.Item[m].SubItems[6]))+strtofloat(resultlistview.Items.Item[m].SubItems[8]))
+                 end else break
+
+               end;
+             with form2.ListView1.Items.Add do
+             begin
+               caption:= resultlistview.Items.Item[i].Caption;
+               if NP=1 then
+               SubItems.Add('1 point' ) else SubItems.Add(Np.ToString+' points' ) ;
+               SubItems.Add(trim(s1));
+               SubItems.Add(trim(s2));
+             end;
+
+            end;
+
+
 
    end;
 
- Result:=CloseOne;
-
+form1.WindowState:=wsMinimized;
+form2.show;
 end;
 
-Function is_it_right (IA,IP:integer):boolean;
-var
-Xa,Xb,Xk, Ya,YB,YK, Product :Real;
-
+procedure TForm1.BitBtn2ContextPopup(Sender: TObject; MousePos: TPoint;
+  var Handled: Boolean);
 begin
-  Xa:= getcoords(form1.Memo1.Lines.Strings[IA],X);
-  XB:= getcoords(form1.Memo1.Lines.Strings[IA+1],X);
-  Ya:= getcoords(form1.Memo1.Lines.Strings[IA],Y);
-  YB:= getcoords(form1.Memo1.Lines.Strings[IA+1],Y);
-  XK:= getcoords(form1.Memo2.Lines.Strings[IP],X);
-  YK:= getcoords(form1.Memo2.Lines.Strings[IP],Y);
-
-Product:=(Xb-Xa)*(YK-Ya)-(YB-Ya)*(Xk-Xa);
-
-is_it_right := Product<=0 ;
+form1.WindowState:=wsMinimized;
+form2.show;
 end;
 
-procedure AddToList(IA,IP:integer;D:Real);
-var
-sA,sp:String;
-Sd:string;
+procedure TForm1.BitBtn3Click(Sender: TObject);
 begin
-SA:=form1.Memo1.Lines.Strings[IA];
-SP:=form1.Memo2.Lines.Strings[IP];
-with form1.ListView1.Items.Add do
- begin
-   Caption:= GetPointName(form1.Memo1.Lines.Strings[IA]);
-   SubItems.Add(floattostr(Getcoords(sa,x))) ;
-   SubItems.Add(floattostr(Getcoords(sa,y))) ;
-   SubItems.Add(GetPointName(sp)) ;
-   SD:= formatFloat('#00.000',D);
-   if sd[1] <>'-' then sd := ' '+sd;
-   SubItems.Add(sd) ;
-   SubItems.Add(floattostr(Getcoords(sp,x))) ;
-   SubItems.Add(floattostr(Getcoords(sp,y))) ;
-   SubItems.Add(floattostr(Getcoords(sp,z))) ;
-   application.ProcessMessages;
+if OpenTextFileDialog1.Execute  then
+begin
+ louadAxe(OpenTextFileDialog1.FileName);
+ LastAxePath:=OpenTextFileDialog1.FileName;
+ PageControl1.ActivePageIndex:=1;
+
+end;
+end;
+
+procedure TForm1.BitBtn4Click(Sender: TObject);
+begin
+  try
+  filldata;
+  finally
+  Memo1.SelectAll;
+  Memo1.CopyToClipboard;
+  if CheckBox3.Checked then showmessage('Data has been copied to clipboard');
  end;
-
 end;
 
-  procedure   sortbyD ;
-var
- TempCaption,s1,s2: string;
- V1,V2 :real;
-  TempSubItems: TStringList;
-  i:integer;
-  done:boolean;
+procedure TForm1.BitBtn5Click(Sender: TObject);
 begin
-   done :=false;
-
-   while ( not done ) and (form1.listview1.Items.Count>3) do
-
-       begin
-         done :=true;
-        for i := 0 to form1.listview1.Items.Count-2 do
-           begin
-             s1:= form1.listview1.Items.Item[i].Caption;
-             s2:= form1.listview1.Items.Item[i+1].Caption;
-             v1:=  strtofloat(form1.listview1.Items.Item[i].SubItems.Strings[3]);
-             v2:=  strtofloat(form1.listview1.Items.Item[i+1].SubItems.Strings[3]);
-
-            if  ( s1=s2) and (  V1<V2 )  then
-
-              try
-              done:=false;
-               TempSubItems := TStringList.Create;
-
-               TempCaption := form1.listview1.Items.Item[i].Caption;
-               TempSubItems.Assign(form1.listview1.Items.Item[i].SubItems);
-
-               form1.listview1.Items.Item[i].Caption:=form1.listview1.Items.Item[i+1].Caption;
-               form1.listview1.Items.Item[i].SubItems.Assign(form1.listview1.Items.Item[i+1].SubItems);
-
-               form1.listview1.Items.Item[i+1].Caption:=TempCaption;
-               form1.listview1.Items.Item[i+1].SubItems.Assign(TempSubItems)  ;
-               finally
-               TempSubItems.Free;
-
-             end;
-
-         end;
-      end;
+  try
+  filldata;
+  finally
+  if  SaveTextFileDialog1.Execute then
+  begin
+  memo1.Lines.SaveToFile(SaveTextFileDialog1.FileName);
+    if CheckBox4.Checked then
+  showmessage('Data has been saved to '+#13+ SaveTextFileDialog1.FileName);
   end;
-
-
-procedure TForm1.App1Click(Sender: TObject);
-begin
- ShellExecute(0, 'open', PChar('https://github.com/soheyb-roukas'), nil, nil, SW_SHOWNORMAL);
+ end;
 end;
 
-procedure TForm1.Button1Click(Sender: TObject);
+procedure TForm1.CheckBox5Click(Sender: TObject);
 begin
-OpenTextFileDialog1.FileName:='';
-if OpenTextFileDialog1.Execute then edit1.Text:= OpenTextFileDialog1.FileName;
+ResultListview.GridLines:=CheckBox5.Checked;
+AxeListView.GridLines:=CheckBox5.Checked;
+PointsListView.GridLines:=CheckBox5.Checked;
+end;
 
+procedure TForm1.ComboBox1Change(Sender: TObject);
+begin
+
+   TStyleManager.SetStyle(combobox1.Items.Strings[combobox1.ItemIndex]);
 
 end;
 
-procedure TForm1.Button2Click(Sender: TObject);
+procedure TForm1.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-OpenTextFileDialog1.FileName:='';
-if OpenTextFileDialog1.Execute then edit2.Text:= OpenTextFileDialog1.FileName;
-end;
-
-procedure TForm1.Button3Click(Sender: TObject);
-var
-iP,NPK:integer;
-d, outX, outY:real;
-sMessage:string;
-//s:string;
-begin
-if not fileexists(Edit1.Text) then sMessage:='Cant Find Axe File' ;
-if not fileexists(Edit2.Text) then sMessage:= sMessage+#13+'Cant Find Topo Points File' ;
-
-if fileexists(Edit1.Text) and fileexists(Edit2.Text) then
-
-   begin
-
-  SaveLastSettings;
-    try
-      memo1.Lines.LoadFromFile(edit1.Text);
-      memo2.Lines.LoadFromFile(edit2.Text);
-      listview1.Items.Clear;
-      outX:=2*getcoords(memo1.Lines.Strings[memo1.Lines.Count-1],x)-getcoords(memo1.Lines.Strings[memo1.Lines.Count-2],x);
-      outY:=2*getcoords(memo1.Lines.Strings[memo1.Lines.Count-1],y)-getcoords(memo1.Lines.Strings[memo1.Lines.Count-2],y);
-      memo1.Lines.Add('Out_Off_Range '+floattostr(outX)+' '+Floattostr(outY));
-      statusbar1.Panels.Items[1].Text:=inttostr(Memo1.Lines.Count-1);
-      statusbar1.Panels.Items[3].Text:=inttostr(Memo2.Lines.Count);
-
-    finally
-    button3.Enabled:=false;
-    button4.Enabled:=false;
-    button5.Enabled:=false;
-     ProgressBar1.Max:=memo2.Lines.Count-1;
-
-      for ip :=0 to memo2.Lines.Count-1 do
-        begin
-         NPK:= NearPK(IP);
-
-         d:=GetDistance(NPK,IP);
-
-         if not is_it_right (NearPK(IP),IP)  then d:=d*-1;
-
-         AddToList(NPK,IP,D);
-        ProgressBar1.Position:=ip;
-        end;
-
-    end;
-         sortbyD ;
-         showmessage('Operation completed successfully '+inttostr(ListView1.Items.Count)+' Point get muched');
-
-         
-  end else showmessage(sMessage);
-
-      IF LISTVIEW1.Items.Count>0 Then begin   button4.Enabled:=true;  button5.Enabled:=true; end;
-      button3.Enabled:=true;
-
-end;
-procedure TForm1.Button4Click(Sender: TObject);
-begin
-form2.Button1.Click;
-end;
-
-procedure TForm1.Button5Click(Sender: TObject);
-begin
-form2.Button2.Click;
-end;
-
-procedure TForm1.Dark1Click(Sender: TObject);
-begin
- TStyleManager.TrySetStyle('Glow');
- Dark1.Checked:=true;
- Light1.Checked:=false;
- SaveLastSettings;
-end;
-
-procedure TForm1.Edit1Change(Sender: TObject);
-begin
-statusbar1.Panels.Items[1].Text:='';
-button3.Enabled:=true;
-end;
-
-procedure TForm1.Edit2Change(Sender: TObject);
-begin
-statusbar1.Panels.Items[3].Text:='';
-button3.Enabled:=true;
-end;
-
-procedure TForm1.Export2Click(Sender: TObject);
-begin
-form2.ShowModal;
+SaveOptions;
 end;
 
 procedure TForm1.FormCreate(Sender: TObject);
 begin
- // if ParamCount > 0 then
-//     ShowMessage('Argument: ' + ParamStr(1));
+LouadOptions;
+statusbar1.Panels.Items[4].Text:='V2.1 by Soheyb 2025';
 
-statusbar1.Panels.Items[4].Text:='Made By Soheyb 2024';
 end;
 
-procedure TForm1.Light1Click(Sender: TObject);
-
+procedure TForm1.Github1Click(Sender: TObject);
 begin
-TStyleManager.TrySetStyle('copper');
-Light1.Checked:=true;
- Dark1.Checked:=false;
- SaveLastSettings;
+ ShellExecute(0, 'open', PChar('https://github.com/soheyb-roukas'), nil, nil, SW_SHOWNORMAL);
 end;
 
-procedure TForm1.ListView1Compare(Sender: TObject; Item1, Item2: TListItem;
-  Data: Integer; var Compare: Integer);
+procedure TForm1.Polylinewindow1Click(Sender: TObject);
+begin
+form1.WindowState:=wsMinimized;
+form2.show;
+end;
 
+procedure TForm1.ResultListviewCompare(Sender: TObject; Item1, Item2: TListItem;
+  Data: Integer; var Compare: Integer);
+  var
+  Value1, Value2: Real;
 begin
   Compare := AnsiCompareText(Item1.Caption, Item2.Caption);
-  end;
-
-procedure TForm1.Memo1Change(Sender: TObject);
-var
-i: integer;
-begin
-memo1.Text:=trim(Memo1.Text);
-  i:=0;
-  if i< memo1.Lines.Count then
+  if Compare = 0 then
   begin
-    if length(Trim(memo1.Lines.Strings[i]))<1 then
-    memo1.Lines.Delete(i);
-     i:=i+1;
+    Value1 := StrToFloatDef(trim(Item1.SubItems[2]), 0.000);
+    Value2 := StrToFloatDef(trim(Item2.SubItems[2]), 0.000);
+    Compare :=strtoint( IfThen(Value2 > Value1, '1', '0'));
   end;
 
-
-end;
-
-procedure TForm1.Memo2Change(Sender: TObject);
-var
-i: integer;
-begin
-memo2.Text:=trim(Memo2.Text);
-  i:=0;
-  if i< memo2.Lines.Count then
-  begin
-    if length(Trim(memo2.Lines.Strings[i]))<1 then
-    memo2.Lines.Delete(i);
-     i:=i+1;
-  end;
 end;
 
 procedure TForm1.SelectAxeFile1Click(Sender: TObject);
 begin
-button1.Click;
+BitBtn3.Click;
 end;
 
-procedure TForm1.SelectTopgraphicFile1Click(Sender: TObject);
+procedure TForm1.SelectTopoPointsFile1Click(Sender: TObject);
 begin
-button2.Click;
+BitBtn1.Click;
+end;
+
+procedure TForm1.TabSheet4Exit(Sender: TObject);
+begin
+SaveOptions;
+end;
+
+procedure TForm1.Timer1Timer(Sender: TObject);
+begin
+ComboBox1.ItemIndex:=ComboBox1.ItemIndex+1;
+ TStyleManager.SetStyle(combobox1.Items.Strings[combobox1.ItemIndex]);
 end;
 
 end.
