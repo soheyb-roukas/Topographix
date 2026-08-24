@@ -1,9 +1,12 @@
-# Topographix V2.1  
+# Topographix V3.0  
 
 ![Topographix Interface](https://i.ibb.co/VWnvxzMx/icon.png)  
-*An alternative to traditional tools like AutoCAD + Covadis for topographic professionals.*
+*A lightweight alternative to traditional AutoCAD + Covadis workflows for topographic data processing.*
 
 **Topographix** is a modern, streamlined alternative to traditional tools like AutoCAD and Covadis, designed specifically for professionals in topography and public works. This Windows desktop application simplifies the process of matching topographic coordinates with their nearest axis profiles, calculating distances, and organizing results in an easy-to-read ordered list.
+
+## Download the App:
+[![Download](https://i.ibb.co/v4X8FrV7/TPGX-Download.png)](https://github.com/soheyb-roukas/Topographix/releases/tag/V3)
 
 ## Key Features:
 - **Coordinate Matching**: Quickly match topographic coordinates (`x`, `y`, `z`) with their corresponding axis profiles.
@@ -19,7 +22,7 @@
 ## Technologies:
 - **Language**: Pascal (Delphi)  
 - **Framework**: VCL (Visual Component Library)  
-- **Platform**: Windows (32-bit and 64-bit)  
+- **Platform**: Windows  
 
 ## Getting Started:
 1. Clone the repository:  
@@ -29,7 +32,7 @@
 
 
 ## Screenshot:
-![Topographix V2.1 Interface](https://i.ibb.co/V0XxKHB9/GUI.png)  
+![Topographix V3 Interface](https://i.ibb.co/1VLhzR3/TPGX-V3.png)  
 *Example of the user-friendly interface for topographic professionals.*
 
 
